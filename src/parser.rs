@@ -1,9 +1,9 @@
-use std::fs;
 use std::collections::HashMap;
 use std::fmt::Error;
+use std::fs;
 
-pub fn read_hosts() -> String {
-    fs::read_to_string("/etc/hosts").expect("Error reading /etc/hosts")
+pub fn read_hosts(path: &str) -> String {
+    fs::read_to_string(path).expect(&format!("Error reading {}", path))
 }
 
 pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
@@ -13,10 +13,11 @@ pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
     for s in split {
         vec_ref = None;
         //ignore comments
-        if s.starts_with("#") {
+        if s.starts_with("#") || s.is_empty() {
             continue;
         }
         let mut prev: usize = 0;
+
         for (i, c) in s.chars().enumerate() {
             if c == ' ' || i == s.len() - 1 {
                 //we dont need empty words
@@ -34,6 +35,9 @@ pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
                 }
                 prev = i;
             }
+        }
+        if vec_ref.unwrap().len() == 0 {
+            return Err(Error::default());
         }
     };
     Ok(map)

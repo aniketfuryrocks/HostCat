@@ -1,1 +1,1 @@
-cargo build && sudo ./target/debug/HostCat
+cargo build && sudo ./target/debug/HostCat "$@"
