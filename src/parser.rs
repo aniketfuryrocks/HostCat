@@ -42,3 +42,17 @@ pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
     };
     Ok(map)
 }
+
+pub fn hosts_map_to_string(hosts: &HashMap<&str, Vec<&str>>) -> String {
+    let mut str_buf = String::new();
+    for (addr, names) in hosts {
+        str_buf.push_str(addr);
+        str_buf.push(' ');
+        for name in names {
+            str_buf.push_str(name);
+            str_buf.push(' ');
+        }
+        str_buf.push('\n');
+    }
+    str_buf
+}
