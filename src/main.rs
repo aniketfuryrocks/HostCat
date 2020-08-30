@@ -13,13 +13,13 @@ fn main() {
         privileges::check_privileges();
     }
     //read host file
-    let hosts = read_hosts(&args.config);
+    let hosts = read_hosts(&args.file);
     let hosts = parse_hosts(&hosts).expect("Invalid config file");
     //match sub commands
     match args.sub_cmd {
         SubCommand::Switch(s) => {
             println!("switching")
-        },
+        }
     }
     println!("{:?}", hosts);
 }
