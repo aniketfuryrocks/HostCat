@@ -7,7 +7,18 @@ pub struct Args {
     pub config: String,
     #[clap(long = "ru", about = "continue without checking for root privileges")]
     pub root_unchecked: bool,
+    #[clap(subcommand)]
+    pub sub_cmd: SubCommand,
 }
+
+#[derive(Clap)]
+pub enum SubCommand {
+    #[clap()]
+    Switch(Switch)
+}
+
+#[derive(Clap)]
+pub struct Switch;
 
 pub fn map_args() -> Args {
     Args::parse()
