@@ -1,2 +1,3 @@
+default: [ ]
 wb360: [ webbuddy360.com, api.webbuddy360.com ]
 alok: [ alokproducts.com, api.alokproducts.com ]
