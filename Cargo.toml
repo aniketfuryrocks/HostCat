@@ -12,7 +12,6 @@ keywords = ["hosts", "dns", "local_dns", "dns", "localhost"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-users = "0.10.0"
 clap = "3.0.0-beta.1"
 better-panic = "0.2.0"
 
