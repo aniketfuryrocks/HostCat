@@ -8,6 +8,7 @@ mod privileges;
 mod args_mapper;
 
 fn main() {
+    better_panic::install();
     //map args
     let args = map_args();
     //optional check for root privileges
