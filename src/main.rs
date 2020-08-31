@@ -55,6 +55,7 @@ fn main() {
             }
             //write to file
             fs::write(&args.config, hosts_map_to_string(&config).unwrap()).expect("Error writing to config file");
-        }
+        },
+        SubCommand::Profiles(_) => {}
     }
 }

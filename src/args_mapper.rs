@@ -17,8 +17,12 @@ pub enum SubCommand {
     Switch(SwitchArg),
     #[clap(about = "create/update/delete a profile")]
     Set(SetArg),
+    #[clap(about = "list all profiles")]
+    Profiles(EmptyCmd),
 }
 
+#[derive(Clap)]
+pub struct EmptyCmd;
 
 #[derive(Clap)]
 pub struct SwitchArg {
