@@ -1,9 +1,14 @@
+use std::{env, fs};
 use std::collections::HashMap;
 use std::fmt::Error;
-use std::fs;
 
 pub fn read_hosts(path: &str) -> String {
-    fs::read_to_string(path).expect(&format!("Error reading {}", path))
+    let path = if path == "~/.hostcat" {
+        format!("{}/{}", env::home_dir().unwrap().to_str().unwrap(), ".hostcat")
+    } else {
+        path.to_string()
+    };
+    fs::read_to_string(&path).expect(&format!("Error reading {}", path))
 }
 
 pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
