@@ -35,17 +35,12 @@ fn main() {
             }
         }
         SubCommand::Set(s) => {
-            //check if value was provided
-            /*if s.value.is_empty() {
-                panic!("Value not specified, use -v option to specify one");
-            }
             //overwrite profile
-            let arr: &mut Vec<Yaml> = config[&s.profile[..]].as_vec().unwrap().as_mut();
-            arr.push(YamlLoader::load_from_str(&format!("[{}]", s.value)).unwrap()[0].to_owned());
+            config.insert(&s.profile[..], s.value.split(" ").collect());
             //inform
             println!("Writing to profile {}", s.profile);
             //write to file
-            println!("{:?}", config);*/
+            fs::write(&args.config, hosts_map_to_string(&config)).expect("Error writing to config file");
         }
     }
 }

@@ -17,9 +17,9 @@ pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
             continue;
         }
         let mut prev: usize = 0;
-
+        let index_of_last_char = s.len() - 1;
         for (i, c) in s.chars().enumerate() {
-            if c == ' ' || i == s.len() - 1 {
+            if c == ' ' || i == index_of_last_char {
                 //we dont need empty words
                 if i - prev > 1 {
                     match &mut vec_ref {
@@ -29,7 +29,7 @@ pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
                             vec_ref = Some(map.get_mut(spl).unwrap());
                         }
                         Some(vec_) => {
-                            vec_.push(&s[prev + 1..(if i == s.len() - 1 { i + 1 } else { i })]);
+                            vec_.push(&s[prev + 1..(if i == index_of_last_char && c != ' ' { i + 1 } else { i })]);
                         }
                     };
                 }
