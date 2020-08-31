@@ -8,7 +8,7 @@ description = "UNIX Command Line tool to switch between Local Dns profiles"
 readme = "README.md"
 homepage = "https://github.com/aniketfuryrocks/HostCat"
 repository = "https://github.com/aniketfuryrocks/HostCat"
-keywords = ["hosts", "dns", "local dns", "/etc/hosts"]
+keywords = ["hosts", "dns", "local_dns", "dns", "localhost", "/etc/hosts"]
 categories = ["command-line-utilities"]
 
 [dependencies]
