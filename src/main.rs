@@ -42,12 +42,14 @@ fn main() {
                 panic!("Profile name is empty");
             }
             if s.value.is_empty() {
-                panic!("Value is empty");
+                println!("Removing profile {} due to empty value", s.profile);
+                config.remove(&s.profile[..]);
+            } else {
+                //overwrite profile
+                config.insert(&s.profile[..], s.value.split(" ").collect());
+                //inform
+                println!("Writing to profile {}", s.profile);
             }
-            //overwrite profile
-            config.insert(&s.profile[..], s.value.split(" ").collect());
-            //inform
-            println!("Writing to profile {}", s.profile);
             //write to file
             fs::write(&args.config, hosts_map_to_string(&config).unwrap()).expect("Error writing to config file");
         }
