@@ -30,7 +30,7 @@ Here `-p` donates a profile name and `-v` donates its' Dns
 ```shell script
 $ sudo hostcat switch -p foo
 ```
-
+***
 > Use this command to view help
 > ```shell script
 > $ sudo hostcat help
