@@ -1,6 +1,3 @@
-use std::borrow::Borrow;
-use std::collections::hash_map::RandomState;
-use std::collections::HashMap;
 use std::fs;
 
 use crate::args_mapper::{map_args, SubCommand};
@@ -55,7 +52,27 @@ fn main() {
             }
             //write to file
             fs::write(&args.config, hosts_map_to_string(&config).unwrap()).expect("Error writing to config file");
-        },
-        SubCommand::Profiles(_) => {}
+        }
+        SubCommand::Profiles(_) => {
+            let mut biggest = 0;
+            for (profile, _) in &config {
+                let len = profile.len();
+                if biggest < len {
+                    biggest = len;
+                }
+            }
+            for (profile, values) in &config {
+                let spaces = format!("{: <1$}", "", biggest - profile.len());
+                print!("\x1b[0;32m{}\x1b[0m{}  :  ", profile, spaces);
+                for (i, x) in values.iter().enumerate() {
+                    if i == 0 {
+                        print!("{}", x)
+                    } else {
+                        print!(", {}", x)
+                    }
+                }
+                println!();
+            }
+        }
     }
 }
