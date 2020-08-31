@@ -1,7 +1,11 @@
-use std::{env, fs};
+use std::fs;
+
+use crate::src::my_fs::validate_tilde;
+
+mod src;
 
 fn main() {
-    let config_file = format!("{}/{}", env::home_dir().unwrap().to_str().unwrap(), ".hostcat");
+    let config_file = validate_tilde("~/.hostcat".to_string());
     match fs::write(&config_file, "default localhost") {
         Err(e) => {
             println!("cargo:warning=Error creating default config file [{}] {}", &config_file, e.to_string());

@@ -1,32 +1,31 @@
 use std::fs;
 
 use crate::args_mapper::{map_args, SubCommand};
-use crate::parser::{hosts_map_to_string, parse_hosts, read_hosts};
+use crate::my_fs::validate_tilde;
+use crate::parser::{hosts_map_to_string, parse_hosts};
 
 mod parser;
-mod privileges;
 mod args_mapper;
+mod my_fs;
 
 fn main() {
     better_panic::install();
     //map args
-    let args = map_args();
-    //optional check for root privileges
-    if !args.root_unchecked {
-        privileges::check_privileges();
-    }
-    //read host file-
+    let mut args = map_args();
+    args.config = validate_tilde(args.config);
+    //read host file
     let config = fs::read_to_string(&args.config).expect(&format!("Error reading config from {}", &args.config));
     let mut config = parse_hosts(&config).expect("Invalid Config file");
     //match sub commands
     match args.sub_cmd {
-        SubCommand::Switch(s) => {
+        SubCommand::Switch(mut s) => {
+            s.file = validate_tilde(s.file);
             match config.get_mut(&s.profile[..]) {
                 None => panic!("Profile {} does not exist", s.profile),
                 Some(profile) => {
-                    let hosts = read_hosts(&s.file);
+                    let hosts = fs::read_to_string(&s.file).expect(&format!("Error reading hosts file {}", &s.file));
                     let mut hosts = parse_hosts(&hosts).expect("Invalid host file");
-                    println!("Switching to profile {}", s.profile);
+                    println!("Switching to profile {}", &s.profile);
                     if !profile.contains(&"localhost") {
                         profile.push("localhost");
                     }

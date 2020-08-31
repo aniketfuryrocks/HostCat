@@ -5,8 +5,6 @@ use clap::Clap;
 pub struct Args {
     #[clap(short = "c", long = "config", default_value = "~/.hostcat")]
     pub config: String,
-    #[clap(long = "ru", about = "continue without checking for root privileges")]
-    pub root_unchecked: bool,
     #[clap(subcommand)]
     pub sub_cmd: SubCommand,
 }
