@@ -25,13 +25,14 @@ $ sudo hostcat set -p foo -v "foo.com api.foo.com"
 ```
 Here `-p` donates a profile name and `-v` donates its' Dns
 
-*Switch profile*
+# Switch profile
 
 ```shell script
 $ sudo hostcat switch -p foo
 ```
-***
-> Use this command to view help
-> ```shell script
-> $ sudo hostcat help
-> ```
+
+# Print Profiles
+
+```shell script
+$ sudo hostcat profiles
+```
