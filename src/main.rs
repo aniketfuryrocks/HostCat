@@ -1,25 +1,21 @@
 use std::fs;
 
 use crate::args_mapper::{map_args, SubCommand};
-use crate::my_fs::validate_tilde;
 use crate::parser::{hosts_map_to_string, parse_hosts};
 
 mod parser;
 mod args_mapper;
-mod my_fs;
 
 fn main() {
     better_panic::install();
     //map args
-    let mut args = map_args();
-    args.config = validate_tilde(args.config);
+    let args = map_args();
     //read host file
     let config = fs::read_to_string(&args.config).expect(&format!("Error reading config from {}", &args.config));
     let mut config = parse_hosts(&config).expect("Invalid Config file");
     //match sub commands
     match args.sub_cmd {
-        SubCommand::Switch(mut s) => {
-            s.file = validate_tilde(s.file);
+        SubCommand::Switch(s) => {
             match config.get_mut(&s.profile[..]) {
                 None => panic!("Profile {} does not exist", s.profile),
                 Some(profile) => {

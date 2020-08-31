@@ -4,7 +4,7 @@ use std::fmt::Error;
 pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
     let split = hosts.split("\n");
     let mut map: HashMap<&str, Vec<&str>> = HashMap::new();
-    let mut vec_ref = None;
+    let mut vec_ref;
     for s in split {
         vec_ref = None;
         //ignore comments

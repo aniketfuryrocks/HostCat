@@ -1,9 +1,13 @@
+use std::fs;
+use std::io::{stdin, stdout, Write};
+use std::path::Path;
+
 use clap::Clap;
 
 #[derive(Clap)]
 #[clap(version = "0.3.0", about = "UNIX Command Line tool to switch between Local Dns profiles")]
 pub struct Args {
-    #[clap(short = "c", long = "config", default_value = "~/.hostcat")]
+    #[clap(short = "c", long = "config", default_value = "/etc/hostcat")]
     pub config: String,
     #[clap(subcommand)]
     pub sub_cmd: SubCommand,
@@ -39,5 +43,17 @@ pub struct SetArg {
 }
 
 pub fn map_args() -> Args {
-    Args::parse()
+    let args: Args = Args::parse();
+    if !Path::new(&args.config).exists() {
+        print!("Config file {} doesn't exist! Create ? [Y/n] ", args.config);
+        stdout().flush().unwrap();
+        let buf = &mut String::new();
+        stdin().read_line(buf).unwrap();
+        if buf == "n\n" || buf == "N\n" {
+            panic!("Config file not found at {}", &args.config)
+        } else {
+            fs::write(&args.config, "default localhost").unwrap();
+        }
+    }
+    args
 }
