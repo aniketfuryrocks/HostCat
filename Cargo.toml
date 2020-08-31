@@ -1,8 +1,15 @@
 [package]
 name = "hostcat"
-version = "0.1.0"
-authors = ["dedsec"]
 edition = "2018"
+version = "0.1.0"
+authors = ["Aniket Prajapati <prajapati.ani306@gmail.com>"]
+license = "GPL-3.0-or-later"
+description = "UNIX Command Line tool to switch between Local Dns profiles"
+readme = "README.md"
+homepage = "https://github.com/aniketfuryrocks/HostCat"
+repository = "https://github.com/aniketfuryrocks/HostCat"
+keywords = ["hosts", "dns", "local dns", "/etc/hosts"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 users = "0.10.0"

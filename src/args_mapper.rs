@@ -1,7 +1,7 @@
 use clap::Clap;
 
 #[derive(Clap)]
-#[clap(version = "0.0.1", author = "Aniket Prajapati <prajapati.ani306@gmail.com>")]
+#[clap(version = "0.0.1", about = "UNIX Command Line tool to switch between Local Dns profiles")]
 pub struct Args {
     #[clap(short = "c", long = "config", default_value = "/etc/hostcat")]
     pub config: String,

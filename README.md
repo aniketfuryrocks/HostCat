@@ -36,3 +36,12 @@ $ sudo hostcat switch -p foo
 ```shell script
 $ sudo hostcat profiles
 ```
+
+## License & Copyright
+
+Copyright (C) 2020 Aniket Prajapati
+
+Licensed under the **[GNU GENERAL PUBLIC LICENSE](LICENSE)**
+
+## Contributors
+ + [Aniket Prajapati](https://github.com/aniketfuryrocks) @[prajapati.ani306@gmail.com](mailto:prajapati.ani306@gmail.com) , [eAdded](http://www.eadded.com)
