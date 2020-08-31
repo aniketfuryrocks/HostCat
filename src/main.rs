@@ -34,7 +34,11 @@ fn main() {
                 }
             }
         }
-        SubCommand::Set(s) => {
+        SubCommand::Set(mut s) => {
+            s.value = s.value.trim().to_string();
+            if s.value.is_empty() {
+                panic!("Value is empty");
+            }
             //overwrite profile
             config.insert(&s.profile[..], s.value.split(" ").collect());
             //inform
