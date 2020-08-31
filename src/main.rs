@@ -27,14 +27,14 @@ fn main() {
             match config.get_mut(&s.profile[..]) {
                 None => panic!("Profile {} does not exist", s.profile),
                 Some(profile) => {
-                    let hosts = read_hosts(&s.hosts);
+                    let hosts = read_hosts(&s.file);
                     let mut hosts = parse_hosts(&hosts).expect("Invalid host file");
                     println!("Switching to profile {}", s.profile);
                     if !profile.contains(&"localhost") {
                         profile.push("localhost");
                     }
                     hosts.insert("127.0.0.1", profile.to_vec());
-                    fs::write(s.hosts, hosts_map_to_string(&hosts).unwrap()).expect("Error writing to hosts file");
+                    fs::write(&s.file, hosts_map_to_string(&hosts).unwrap()).expect("Error writing to hosts file");
                 }
             }
         }
