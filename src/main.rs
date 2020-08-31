@@ -30,12 +30,16 @@ fn main() {
                         profile.push("localhost");
                     }
                     hosts.insert("127.0.0.1", profile.to_vec());
-                    fs::write(&args.file, hosts_map_to_string(&hosts)).expect("Error writing to hosts file");
+                    fs::write(&args.file, hosts_map_to_string(&hosts).unwrap()).expect("Error writing to hosts file");
                 }
             }
         }
         SubCommand::Set(mut s) => {
             s.value = s.value.trim().to_string();
+            s.profile = s.profile.trim().to_string();
+            if s.profile.is_empty() {
+                panic!("Profile name is empty");
+            }
             if s.value.is_empty() {
                 panic!("Value is empty");
             }
@@ -44,7 +48,7 @@ fn main() {
             //inform
             println!("Writing to profile {}", s.profile);
             //write to file
-            fs::write(&args.config, hosts_map_to_string(&config)).expect("Error writing to config file");
+            fs::write(&args.config, hosts_map_to_string(&config).unwrap()).expect("Error writing to config file");
         }
     }
 }

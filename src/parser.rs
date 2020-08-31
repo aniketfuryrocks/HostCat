@@ -43,16 +43,24 @@ pub fn parse_hosts(hosts: &str) -> Result<HashMap<&str, Vec<&str>>, Error> {
     Ok(map)
 }
 
-pub fn hosts_map_to_string(hosts: &HashMap<&str, Vec<&str>>) -> String {
+pub fn hosts_map_to_string(hosts: &HashMap<&str, Vec<&str>>) -> Result<String, String> {
     let mut str_buf = String::new();
     for (addr, names) in hosts {
+        let addr = addr.trim();
+        if addr.is_empty() {
+            return Err("Property name is empty".to_string());
+        }
         str_buf.push_str(addr);
         str_buf.push(' ');
         for name in names {
+            let name = name.trim();
+            if name.is_empty() {
+                return Err(format!("Value for property {} is empty", addr));
+            }
             str_buf.push_str(name);
             str_buf.push(' ');
         }
         str_buf.push('\n');
     }
-    str_buf
+    Ok(str_buf)
 }
