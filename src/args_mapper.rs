@@ -1,5 +1,3 @@
-use std::path::Path;
-
 use clap::Clap;
 
 #[derive(Clap)]
@@ -7,7 +5,7 @@ use clap::Clap;
 pub struct Args {
     #[clap(short = "f", long = "file", default_value = "/etc/hosts")]
     pub file: String,
-    #[clap(short = "c", long = "config", default_value = "/etc/hostcat/hostcat.yml")]
+    #[clap(short = "c", long = "config", default_value = "/etc/hostcat/config")]
     pub config: String,
     #[clap(long = "ru", about = "continue without checking for root privileges")]
     pub root_unchecked: bool,
@@ -18,13 +16,24 @@ pub struct Args {
 #[derive(Clap)]
 pub enum SubCommand {
     #[clap(about = "switch to profile specified by -p option")]
-    Switch(Switch)
+    Switch(ProfileArg),
+    #[clap(about = "create a new profile")]
+    Set(SetArg),
+}
+
+
+#[derive(Clap)]
+pub struct ProfileArg {
+    #[clap(short = "p", long = "profile", default_value = "default")]
+    pub profile: String
 }
 
 #[derive(Clap)]
-pub struct Switch {
+pub struct SetArg {
     #[clap(short = "p", long = "profile", default_value = "default")]
-    pub(crate) profile: String
+    pub profile: String,
+    #[clap(short = "v", long = "value")]
+    pub value: String,
 }
 
 pub fn map_args() -> Args {
