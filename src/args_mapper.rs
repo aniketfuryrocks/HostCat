@@ -5,7 +5,7 @@ use std::path::Path;
 use clap::Clap;
 
 #[derive(Clap)]
-#[clap(version = "0.3.0", about = "UNIX Command Line tool to switch between Local Dns profiles")]
+#[clap(version = "0.4.0", about = "UNIX Command Line tool to switch between Local Dns profiles")]
 pub struct Args {
     #[clap(short = "c", long = "config", default_value = "/etc/hostcat")]
     pub config: String,
