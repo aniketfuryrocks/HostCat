@@ -12,14 +12,16 @@ bar -> bar.com api.bar.com
 
 allow users to create local DNS for `foo.com api.foo.com` and `bar.com api.bar.com` and assign a profile to them, which can be switched using hostcat effortlessly
 
-## Creating a profile
+## Install
 
-*create a plain config file (required once)*
+Use [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+
 ```shell script
-$ sudo sh -c "echo \"default localhost\" >> /etc/hostcat"
+$ cargo install hostcat
 ```
 
-*create a profile*
+## Creating a profile
+
 ```shell script
 $ sudo hostcat set -p foo -v "foo.com api.foo.com"
 ```
@@ -36,6 +38,8 @@ $ sudo hostcat switch -p foo
 ```shell script
 $ sudo hostcat profiles
 ```
+
+> Tested on Manjaro Linux x86_6
 
 ## License & Copyright
 
