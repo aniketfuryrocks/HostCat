@@ -1,3 +1,6 @@
+use std::borrow::Borrow;
+use std::collections::hash_map::RandomState;
+use std::collections::HashMap;
 use std::fs;
 
 use crate::args_mapper::{map_args, SubCommand};
@@ -16,8 +19,6 @@ fn main() {
         privileges::check_privileges();
     }
     //read host file-
-    let hosts = read_hosts(&args.file);
-    let mut hosts = parse_hosts(&hosts).expect("Invalid host file");
     let config = fs::read_to_string(&args.config).expect(&format!("Error reading config from {}", &args.config));
     let mut config = parse_hosts(&config).expect("Invalid Config file");
     //match sub commands
@@ -26,12 +27,14 @@ fn main() {
             match config.get_mut(&s.profile[..]) {
                 None => panic!("Profile {} does not exist", s.profile),
                 Some(profile) => {
+                    let hosts = read_hosts(&s.hosts);
+                    let mut hosts = parse_hosts(&hosts).expect("Invalid host file");
                     println!("Switching to profile {}", s.profile);
                     if !profile.contains(&"localhost") {
                         profile.push("localhost");
                     }
                     hosts.insert("127.0.0.1", profile.to_vec());
-                    fs::write(&args.file, hosts_map_to_string(&hosts).unwrap()).expect("Error writing to hosts file");
+                    fs::write(s.hosts, hosts_map_to_string(&hosts).unwrap()).expect("Error writing to hosts file");
                 }
             }
         }
